@@ -64,19 +64,22 @@ def show_chat_interface():
     
     # System message with all courses information
     system_message = f"""You are a helpful golf course assistant for Baltimore area golf courses.
-    You have access to information about all courses and can help users find the right course for their needs.
-    Here are all the available courses and their details:
-    
-    {courses_data}
-    
-    Help users find suitable courses based on their preferences such as:
-    - Location/area
-    - Price range
-    - Amenities
-    - Difficulty level
-    - Special features
-    
-    Provide recommendations and then guide users to select courses using the sidebar."""
+You have access to information about all courses and can help users find the right course for their needs.
+Here are all the available courses and their details:
+
+{courses_data}
+
+Help users find suitable courses based on their preferences such as:
+- Location/area
+- Price range
+- Amenities
+- Difficulty level
+- Special features
+
+For each recommendation:
+1. Suggest specific courses that match the user's criteria
+2. Always ask if they would like to add the recommended courses to their selection
+3. End your response with: "Would you like me to add [course name(s)] to your selection? (Yes/No)""""
 
     # Chat input form
     with st.form(key='chat_form', clear_on_submit=True):
@@ -99,25 +102,53 @@ def show_chat_interface():
             # Add user message to history
             st.session_state.chat_history.append({"role": "user", "content": user_input})
             
-            # Prepare messages for API
-            messages = [
-                {"role": "system", "content": system_message}
-            ]
-            messages.extend(st.session_state.chat_history[-5:])
-            
-            # Get AI response
-            ai_response = get_ai_response(messages)
-            
-            # Add AI response to history
-            st.session_state.chat_history.append({"role": "assistant", "content": ai_response})
-            st.rerun()
+            # After getting AI response, check if user wants to add courses
+            if user_input.lower() in ['yes', 'y']:
+                # Get the last AI message
+                last_ai_message = next((msg for msg in reversed(st.session_state.chat_history) 
+                                    if msg['role'] == 'assistant'), None)
+                if last_ai_message:
+                    # Extract course names from the last recommendation
+                    recommended_courses = [course['name'] for course in courses_info 
+                                        if course['name'] in last_ai_message['content']]
+                    if recommended_courses:
+                        # Add courses to selection
+                        current_selection = st.session_state.get('selected_courses', [])
+                        new_courses = [c for c in recommended_courses if c not in current_selection]
+                        if new_courses:
+                            st.session_state['selected_courses'] = current_selection + new_courses
+                            response = f"I've added {', '.join(new_courses)} to your selection."
+                        else:
+                            response = "These courses are already in your selection."
+                    else:
+                        response = "I couldn't find any courses to add from the last recommendation."
+                    
+                    # Add system message about course selection
+                    st.session_state.chat_history.append({
+                        "role": "assistant",
+                        "content": response
+                    })
+                    st.rerun()
+            else:
+                # Prepare messages for API
+                messages = [
+                    {"role": "system", "content": system_message}
+                ]
+                messages.extend(st.session_state.chat_history[-5:])
+                
+                # Get AI response
+                ai_response = get_ai_response(messages)
+                
+                # Add AI response to history
+                st.session_state.chat_history.append({"role": "assistant", "content": ai_response})
+                st.rerun()
 
     # Clear chat button
     st.button("Clear Chat", key="clear_chat", on_click=clear_chat)
 
     # Display chat history below the form
     if st.session_state.chat_history:
-        for message in reversed(st.session_state.chat_history):
+        for message in st.session_state.chat_history:  # Display in chronological order
             role = message["role"]
             content = message["content"]
             
