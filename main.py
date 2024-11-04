@@ -4,17 +4,17 @@ from components.filters import show_filters
 from components.map_view import show_map
 from components.course_details import show_course_details
 
-# Load custom CSS
-with open('.streamlit/style.css') as f:
-    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-# Page config with custom theme
+# Page config must be the first Streamlit command
 st.set_page_config(
     page_title="Baltimore Golf Courses",
     page_icon="⛳",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Load custom CSS after page config
+with open('.streamlit/style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Custom CSS for page layout
 st.markdown("""
