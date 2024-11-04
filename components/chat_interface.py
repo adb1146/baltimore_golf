@@ -63,7 +63,7 @@ def show_chat_interface():
     ])
     
     # System message with all courses information
-    system_message = f"""You are a helpful golf course assistant for Baltimore area golf courses.
+    system_message = f'''You are a helpful golf course assistant for Baltimore area golf courses.
 You have access to information about all courses and can help users find the right course for their needs.
 Here are all the available courses and their details:
 
@@ -79,7 +79,7 @@ Help users find suitable courses based on their preferences such as:
 For each recommendation:
 1. Suggest specific courses that match the user's criteria
 2. Always ask if they would like to add the recommended courses to their selection
-3. End your response with: "Would you like me to add [course name(s)] to your selection? (Yes/No)""""
+3. End your response with: "Would you like me to add [course name(s)] to your selection? (Yes/No)"'''
 
     # Chat input form
     with st.form(key='chat_form', clear_on_submit=True):
