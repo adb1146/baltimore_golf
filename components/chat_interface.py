@@ -98,7 +98,7 @@ def show_chat_interface():
                     </div>
                 """.format(content=content), unsafe_allow_html=True)
     
-    # Chat input form with submit and clear buttons
+    # Chat input form
     with st.form(key='chat_form', clear_on_submit=True):
         col1, col2 = st.columns([5, 1])
         
@@ -111,8 +111,7 @@ def show_chat_interface():
         
         with col2:
             submit_button = st.form_submit_button("Send")
-            clear_button = st.button("Clear Chat")
-    
+
         if submit_button and user_input:
             # Add user message to history
             st.session_state.chat_history.append({"role": "user", "content": user_input})
@@ -121,7 +120,6 @@ def show_chat_interface():
             messages = [
                 {"role": "system", "content": system_message}
             ]
-            # Add relevant history for context but limit to last few messages
             messages.extend(st.session_state.chat_history[-5:])
             
             # Get AI response
@@ -130,6 +128,7 @@ def show_chat_interface():
             # Add AI response to history
             st.session_state.chat_history.append({"role": "assistant", "content": ai_response})
     
-    # Handle clear button
-    if clear_button:
+    # Clear button outside the form
+    if st.button("Clear Chat"):
         st.session_state.chat_history = []
+        st.rerun()
