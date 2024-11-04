@@ -15,6 +15,9 @@ def load_golf_courses():
             'Fox Hollow Golf Course',
             'Rocky Point Golf Course',
             'The Woodlands Golf Course',
+            'Greystone Golf Course',
+            'Oakmont Green Golf Course',
+            'Gunpowder Falls Golf Course',
             # Howard County
             'Fairway Hills Golf Club',
             'Hobbit\'s Glen Golf Club',
@@ -40,6 +43,9 @@ def load_golf_courses():
             '1 Cardigan Rd, Timonium, MD 21093',
             '1935 Back River Neck Rd, Essex, MD 21221',
             '2309 Ridge Rd, Windsor Mill, MD 21244',
+            '2115 White Hall Rd, White Hall, MD 21161',
+            '2290 Golf View Ln, Hampstead, MD 21074',
+            '2801 Jerusalem Rd, Kingsville, MD 21087',
             # Howard County
             '5100 Columbia Rd, Columbia, MD 21044',
             '11130 Willow Bottom Dr, Columbia, MD 21044',
@@ -53,10 +59,10 @@ def load_golf_courses():
             '100 Walter Ward Blvd, Aberdeen, MD 21001',
             '800 S Main St, Bel Air, MD 21014'
         ],
-        'holes': [18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 36, 18, 18, 18, 18, 18],
-        'par': [70, 71, 71, 72, 70, 72, 71, 71, 70, 70, 72, 72, 72, 71, 71, 72, 71, 70],
-        'weekday_price': [25, 28, 32, 35, 26, 45, 42, 38, 40, 42, 55, 48, 52, 45, 48, 52, 38, 42],
-        'weekend_price': [32, 35, 40, 45, 33, 55, 52, 48, 50, 52, 65, 58, 62, 55, 58, 62, 48, 52],
+        'holes': [18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 36, 18, 18, 18, 18, 18],
+        'par': [70, 71, 71, 72, 70, 72, 71, 71, 70, 72, 71, 70, 70, 72, 72, 72, 71, 71, 72, 71, 70],
+        'weekday_price': [25, 28, 32, 35, 26, 45, 42, 38, 40, 48, 42, 35, 42, 55, 48, 52, 45, 48, 52, 38, 42],
+        'weekend_price': [32, 35, 40, 45, 33, 55, 52, 48, 50, 58, 52, 45, 52, 65, 58, 62, 55, 58, 62, 48, 52],
         'phone': [
             # Baltimore City
             '410-685-8344',
@@ -69,6 +75,9 @@ def load_golf_courses():
             '410-887-7735',
             '410-887-0215',
             '410-887-1349',
+            '410-887-1945',
+            '410-239-7114',
+            '410-592-8877',
             # Howard County
             '410-730-1112',
             '410-730-5980',
@@ -94,6 +103,9 @@ def load_golf_courses():
             'Driving Range, Pro Shop, Restaurant, Lessons',
             'Pro Shop, Restaurant, Practice Green',
             'Driving Range, Pro Shop, Restaurant',
+            'Driving Range, Pro Shop, Restaurant, Practice Facility, Lessons',
+            'Pro Shop, Restaurant, Practice Facility',
+            'Pro Shop, Practice Green, Snack Bar',
             # Howard County
             'Pro Shop, Practice Facility, Restaurant',
             'Driving Range, Pro Shop, Restaurant, Lessons',
@@ -111,7 +123,7 @@ def load_golf_courses():
             # Baltimore City
             39.2675, 39.3219, 39.3645, 39.4139, 39.3199,
             # Baltimore County
-            39.3507, 39.4374, 39.3238, 39.3507,
+            39.3507, 39.4374, 39.3238, 39.3507, 39.6847, 39.6523, 39.4427,
             # Howard County
             39.2123, 39.2073, 39.2031,
             # Anne Arundel County
@@ -123,7 +135,7 @@ def load_golf_courses():
             # Baltimore City
             -76.6589, -76.6883, -76.5874, -76.5947, -76.5838,
             # Baltimore County
-            -76.7983, -76.6024, -76.4033, -76.7947,
+            -76.7983, -76.6024, -76.4033, -76.7947, -76.6478, -76.8515, -76.4177,
             # Howard County
             -76.8614, -76.8697, -76.7514,
             # Anne Arundel County
@@ -143,6 +155,9 @@ def load_golf_courses():
             'Scenic course with well-maintained greens and full practice facility',
             'Waterfront course with beautiful Bay views',
             'Traditional layout with tree-lined fairways',
+            'Upscale municipal course with dramatic elevation changes and panoramic views',
+            'Family-friendly course with rolling terrain and challenging holes',
+            'Scenic course along Gunpowder Falls with natural beauty',
             # Howard County
             'Player-friendly course perfect for all skill levels',
             'Premium public course with country club atmosphere',
