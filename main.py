@@ -3,6 +3,9 @@ from data.golf_courses import load_golf_courses
 from components.filters import show_filters
 from components.map_view import show_map
 from components.course_details import show_course_details
+from components.tee_times import show_tee_times
+from components.reviews import show_course_reviews
+from components.course_photos import show_course_photos_and_holes
 
 # Page config must be the first Streamlit command
 st.set_page_config(
@@ -16,26 +19,12 @@ st.set_page_config(
 with open('.streamlit/style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# Custom CSS for page layout
-st.markdown("""
-    <style>
-    .main {
-        padding: 2rem;
-    }
-    .stApp {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 # Title and introduction with enhanced styling
 st.markdown("""
-    <div style='text-align: center; padding: 2rem 0;'>
+    <div style='text-align: center; padding: 1rem 0;'>
         <h1 style='color: #2E7D32;'>⛳ Baltimore Area Golf Courses</h1>
         <p style='font-size: 1.2rem; color: #666;'>
-            Explore public golf courses in the Baltimore area. Use the sidebar filters to find 
-            courses that match your preferences, and click on course names for detailed information.
+            Explore public golf courses in the Baltimore area. Select a course from the sidebar to view detailed information.
         </p>
     </div>
 """, unsafe_allow_html=True)
@@ -43,23 +32,45 @@ st.markdown("""
 # Load data
 df = load_golf_courses()
 
-# Create three main columns for layout
-left_col, center_col = st.columns([1, 3])
+# Apply filters and get selected course from sidebar
+filtered_df, selected_course = show_filters(df)
 
-with left_col:
-    # Apply filters from sidebar
-    filtered_df = show_filters(df)
+# Create main content area with new proportions
+sidebar_col, main_col = st.columns([1.5, 2.5])
 
-with center_col:
-    # Show map
+with main_col:
+    # Show map at the top
     show_map(filtered_df)
     
-    # Show course details
-    show_course_details(filtered_df)
+    # Show selected course details in tabs
+    if selected_course:
+        course_data = df[df['name'] == selected_course].iloc[0]
+        
+        # Create tabs for different sections
+        info_tab, tee_times_tab, reviews_tab, photos_tab = st.tabs([
+            "📌 Course Info",
+            "🕒 Tee Times",
+            "⭐ Reviews",
+            "📸 Photos & Holes"
+        ])
+        
+        with info_tab:
+            show_course_details(course_data)
+            
+        with tee_times_tab:
+            show_tee_times(selected_course)
+            
+        with reviews_tab:
+            show_course_reviews(selected_course)
+            
+        with photos_tab:
+            show_course_photos_and_holes(selected_course)
+    else:
+        st.info("Please select a course from the sidebar to view details.")
 
 # Footer with enhanced styling
 st.markdown("""
-    <div style='text-align: center; padding: 2rem 0; margin-top: 3rem; border-top: 1px solid #eee;'>
+    <div style='text-align: center; padding: 1rem 0; margin-top: 2rem; border-top: 1px solid #eee;'>
         <p style='color: #666; font-size: 0.9rem;'>
             Data is for demonstration purposes only. Please contact individual courses to verify 
             current prices and availability.
