@@ -9,10 +9,13 @@ def show_map(filtered_df):
     # Get all courses data
     all_courses = load_golf_courses()
     
-    # Create a map centered on Baltimore
+    # Create a map centered on Maryland with bounds restrictions
     m = folium.Map(
-        location=[39.2904, -76.6122],
-        zoom_start=10
+        location=[39.0458, -76.6413],
+        zoom_start=8,
+        min_zoom=7,  # Prevent zooming out too far
+        max_bounds=True,  # Restrict panning
+        bounds=[[37.8, -79.5], [40.2, -74.5]]  # Maryland bounds
     )
     
     # Determine which dataset to use for markers
@@ -48,11 +51,22 @@ def show_map(filtered_df):
     if not display_df.empty:
         sw = display_df[['lat', 'lon']].min().values.tolist()
         ne = display_df[['lat', 'lon']].max().values.tolist()
-        # Add padding to the bounds
-        padding_lat = (ne[0] - sw[0]) * 0.1  # 10% padding
-        padding_lon = (ne[1] - sw[1]) * 0.1
+        
+        # Adjust padding based on the number of markers
+        padding = 0.1 if len(display_df) > 1 else 0.05
+        
+        # Calculate padded bounds
+        padding_lat = (ne[0] - sw[0]) * padding
+        padding_lon = (ne[1] - sw[1]) * padding
         sw = [sw[0] - padding_lat, sw[1] - padding_lon]
         ne = [ne[0] + padding_lat, ne[1] + padding_lon]
+        
+        # Ensure bounds stay within Maryland
+        sw[0] = max(37.8, sw[0])
+        sw[1] = max(-79.5, sw[1])
+        ne[0] = min(40.2, ne[0])
+        ne[1] = min(-74.5, ne[1])
+        
         m.fit_bounds([sw, ne])
     
     # Display the map
