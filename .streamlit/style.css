@@ -1,0 +1,69 @@
+/* Main theme customization */
+[data-testid="stSidebar"] {
+    background-color: #f8f9fa;
+    padding: 2rem 1rem;
+}
+
+.stButton button {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.stButton button:hover {
+    background-color: #45a049;
+}
+
+/* Course details styling */
+.course-header {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.course-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background-color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Review section styling */
+.review-card {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Form styling */
+[data-testid="stForm"] {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Text input styling */
+[data-testid="stTextInput"] input {
+    border-radius: 5px;
+}
+
+/* Expander styling */
+[data-testid="stExpander"] {
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
