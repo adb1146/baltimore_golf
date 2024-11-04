@@ -148,7 +148,7 @@ For each recommendation:
 
     # Display chat history below the form
     if st.session_state.chat_history:
-        for message in st.session_state.chat_history:  # Display in chronological order
+        for message in reversed(st.session_state.chat_history):  # Use reversed() to show newest first
             role = message["role"]
             content = message["content"]
             
