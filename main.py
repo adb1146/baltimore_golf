@@ -19,6 +19,14 @@ st.set_page_config(
 with open('.streamlit/style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
+# Initialize session state for filters if not exists
+if 'selected_courses' not in st.session_state:
+    st.session_state['selected_courses'] = []
+if 'sort_by' not in st.session_state:
+    st.session_state['sort_by'] = "Name"
+if 'selected_amenities' not in st.session_state:
+    st.session_state['selected_amenities'] = []
+
 # Title and introduction
 st.markdown("""
     <div class='header-section'>
