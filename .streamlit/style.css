@@ -2,19 +2,24 @@
 [data-testid="stSidebar"] {
     background-color: #f8f9fa;
     padding: 2rem 1rem;
+    color: #333;
+}
+
+[data-testid="stSidebar"] [data-testid="stMarkdown"] {
+    color: #333;
 }
 
 .stButton button {
     width: 100%;
     border-radius: 5px;
-    background-color: #4CAF50;
+    background-color: #2E7D32;
     color: white;
     font-weight: 500;
     padding: 0.5rem 1rem;
 }
 
 .stButton button:hover {
-    background-color: #45a049;
+    background-color: #1B5E20;
 }
 
 /* Course details styling */
@@ -23,6 +28,7 @@
     padding: 1rem;
     border-radius: 5px;
     margin-bottom: 1rem;
+    color: #333;
 }
 
 .course-stats {
@@ -36,6 +42,7 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    color: #333;
 }
 
 /* Review section styling */
@@ -45,6 +52,7 @@
     border-radius: 5px;
     margin-bottom: 1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    color: #333;
 }
 
 /* Form styling */
@@ -53,11 +61,13 @@
     padding: 1.5rem;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    color: #333;
 }
 
 /* Text input styling */
 [data-testid="stTextInput"] input {
     border-radius: 5px;
+    color: #333;
 }
 
 /* Expander styling */
@@ -66,4 +76,61 @@
     border-radius: 5px;
     margin-bottom: 1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    color: #333;
+}
+
+/* General text styling */
+p, h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+[data-testid="stMarkdown"] {
+    color: #333;
+}
+
+/* Search and filter styling */
+.search-container {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Amenities styling */
+.amenity-tag {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Header section */
+.header-section {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.header-section h1 {
+    color: #2E7D32;
+    margin-bottom: 1rem;
+}
+
+.header-section p {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+/* Footer styling */
+.footer-section {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #eee;
+    color: #666;
 }

@@ -5,23 +5,12 @@ from components.course_photos import show_course_photos_and_holes
 
 def show_course_details(df):
     st.markdown("""
-        <div style='padding: 1rem 0;'>
-            <h2 style='color: #2E7D32;'>Golf Courses</h2>
+        <div class='header-section'>
+            <h2 style='color: #2E7D32; margin-bottom: 1rem;'>Golf Courses</h2>
         </div>
     """, unsafe_allow_html=True)
     
     # Search functionality with improved styling
-    st.markdown("""
-        <style>
-        .search-container {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    
     with st.container():
         col1, col2 = st.columns([2, 1])
         with col1:
@@ -52,7 +41,7 @@ def show_course_details(df):
             st.markdown(f"""
                 <div class='course-header'>
                     <h3 style='color: #2E7D32; margin-bottom: 1rem;'>{course['name']}</h3>
-                    <p style='color: #666;'>{course['description']}</p>
+                    <p style='color: #333;'>{course['description']}</p>
                 </div>
             """, unsafe_allow_html=True)
             
@@ -62,55 +51,65 @@ def show_course_details(df):
             with col1:
                 st.markdown("""
                     <div class='stat-item'>
-                        <h4 style='color: #2E7D32;'>Location & Contact</h4>
+                        <h4 style='color: #2E7D32; margin-bottom: 1rem;'>Location & Contact</h4>
                     </div>
                 """, unsafe_allow_html=True)
-                st.write("📍 **Address:**", course['address'])
-                st.write("📞 **Phone:**", course['phone'])
+                st.markdown(f"""
+                    <div style='color: #333;'>
+                        <p>📍 <strong>Address:</strong> {course['address']}</p>
+                        <p>📞 <strong>Phone:</strong> {course['phone']}</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
             with col2:
                 st.markdown("""
                     <div class='stat-item'>
-                        <h4 style='color: #2E7D32;'>Course Details</h4>
+                        <h4 style='color: #2E7D32; margin-bottom: 1rem;'>Course Details</h4>
                     </div>
                 """, unsafe_allow_html=True)
-                st.write("🏌️ **Holes:**", course['holes'])
-                st.write("🎯 **Par:**", course['par'])
+                st.markdown(f"""
+                    <div style='color: #333;'>
+                        <p>🏌️ <strong>Holes:</strong> {course['holes']}</p>
+                        <p>🎯 <strong>Par:</strong> {course['par']}</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
             with col3:
                 st.markdown("""
                     <div class='stat-item'>
-                        <h4 style='color: #2E7D32;'>Pricing</h4>
+                        <h4 style='color: #2E7D32; margin-bottom: 1rem;'>Pricing</h4>
                     </div>
                 """, unsafe_allow_html=True)
-                st.write("💰 **Weekday:** $", course['weekday_price'])
-                st.write("💰 **Weekend:** $", course['weekend_price'])
+                st.markdown(f"""
+                    <div style='color: #333;'>
+                        <p>💰 <strong>Weekday:</strong> ${course['weekday_price']}</p>
+                        <p>💰 <strong>Weekend:</strong> ${course['weekend_price']}</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
             # Amenities section
             st.markdown("""
-                <div style='margin-top: 1rem;'>
+                <div style='margin-top: 2rem; margin-bottom: 1rem;'>
                     <h4 style='color: #2E7D32;'>Amenities</h4>
                 </div>
             """, unsafe_allow_html=True)
+            
             amenities_list = course['amenities'].split(', ')
             cols = st.columns(len(amenities_list))
             for i, amenity in enumerate(amenities_list):
                 with cols[i]:
                     st.markdown(f"""
-                        <div style='background-color: #f8f9fa; padding: 0.5rem; 
-                        border-radius: 5px; text-align: center;'>
+                        <div class='amenity-tag'>
                             {amenity}
                         </div>
                     """, unsafe_allow_html=True)
             
-            # Add photos and hole descriptions section
-            st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
+            # Additional sections with proper spacing and styling
+            st.markdown("<hr style='margin: 2rem 0; border-color: #eee;'>", unsafe_allow_html=True)
             show_course_photos_and_holes(course['name'])
             
-            # Add tee times section
-            st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
+            st.markdown("<hr style='margin: 2rem 0; border-color: #eee;'>", unsafe_allow_html=True)
             show_tee_times(course['name'])
             
-            # Add reviews section
-            st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
+            st.markdown("<hr style='margin: 2rem 0; border-color: #eee;'>", unsafe_allow_html=True)
             show_course_reviews(course['name'])
