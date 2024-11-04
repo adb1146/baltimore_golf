@@ -16,12 +16,12 @@ def show_filters(df):
         # Clear all selections and reset to defaults
         st.session_state['selected_courses'] = []
         st.session_state['sort_by'] = "Name"
-        st.session_state['price_range'] = (
+        default_price_range = (
             int(df['weekday_price'].min()),
             int(df['weekday_price'].max())
         )
+        st.session_state['price_range'] = default_price_range
         st.session_state['selected_amenities'] = []
-        # Force a rerun to update the UI
         st.rerun()
     
     # Sort options
@@ -32,18 +32,19 @@ def show_filters(df):
         key="sort_by"
     )
     
-    # Price range filter
+    # Price range filter with fixed session state handling
     st.sidebar.subheader("Filters")
+    default_price_range = (
+        int(df['weekday_price'].min()),
+        int(df['weekday_price'].max())
+    )
     price_range = st.sidebar.slider(
         "Weekday Price Range",
         min_value=int(df['weekday_price'].min()),
         max_value=int(df['weekday_price'].max()),
-        value=(
-            int(df['weekday_price'].min()),
-            int(df['weekday_price'].max())
-        ),
-        key="price_range"
+        value=st.session_state.get('price_range', default_price_range)
     )
+    st.session_state['price_range'] = price_range
     
     # Amenities filter
     all_amenities = set()
@@ -52,6 +53,7 @@ def show_filters(df):
     selected_amenities = st.sidebar.multiselect(
         "Select Amenities",
         sorted(list(all_amenities)),
+        default=st.session_state.get('selected_amenities', []),
         key="selected_amenities"
     )
     
@@ -67,7 +69,6 @@ def show_filters(df):
     # Further filter by selected courses if any are selected
     if selected_courses:
         filtered_df = filtered_df[filtered_df['name'].isin(selected_courses)]
-        # Update session state with selected courses
         st.session_state['selected_courses'] = selected_courses
     
     # Apply sorting
@@ -78,5 +79,4 @@ def show_filters(df):
     else:
         filtered_df = filtered_df.sort_values('weekend_price')
     
-    # Return the filtered dataframe and all selected courses
     return filtered_df, selected_courses

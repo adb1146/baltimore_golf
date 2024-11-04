@@ -29,6 +29,12 @@
     margin-bottom: 1rem;
 }
 
+/* MultiSelect dropdown fix */
+[data-testid="stMultiSelect"] div[role="listbox"] {
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+
 .main .block-container {
     padding: 2rem 3rem;
     max-width: 100%;
