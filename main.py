@@ -6,6 +6,7 @@ from components.course_details import show_course_details
 from components.tee_times import show_tee_times
 from components.reviews import show_course_reviews
 from components.course_photos import show_course_photos_and_holes
+from components.chat_interface import show_chat_interface
 
 # Page config must be the first Streamlit command
 st.set_page_config(
@@ -74,7 +75,8 @@ with main_container:
                 "📌 Course Info",
                 "🕒 Tee Times",
                 "⭐ Reviews",
-                "📸 Photos & Holes"
+                "📸 Photos & Holes",
+                "💬 Chat"
             ])
             
             with tabs[0]:
@@ -88,6 +90,9 @@ with main_container:
                 
             with tabs[3]:
                 show_course_photos_and_holes(course_name)
+                
+            with tabs[4]:
+                show_chat_interface(course_name)
     else:
         st.markdown("""
             <div style='background-color: #ffffff; padding: 2rem; border-radius: 8px; text-align: center;'>
