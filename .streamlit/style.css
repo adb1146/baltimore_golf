@@ -1,163 +1,163 @@
 /* Main theme customization */
 [data-testid="stSidebar"] {
-    background-color: #f8f9fa;
-    padding: 2rem 1rem;
-    color: #1a1a1a;
+    background-color: #f0f2f6;
+    padding: 2rem 1.5rem;
+    border-right: 1px solid #e0e3e9;
 }
 
 [data-testid="stSidebar"] [data-testid="stMarkdown"] {
-    color: #1a1a1a;
-}
-
-[data-testid="stVerticalBlock"] {
-    text-align: left !important;
-}
-
-.element-container {
-    text-align: left !important;
+    color: #0e1117;
 }
 
 .main .block-container {
-    text-align: left;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding: 2rem 3rem;
+    max-width: 100%;
 }
 
-.stButton button {
+/* Button styling */
+.stButton > button {
     width: 100%;
-    border-radius: 5px;
-    background-color: #2E7D32;
+    background-color: #1e4620;
+    border: none;
     color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
     font-weight: 500;
-    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+    transition: background-color 0.2s;
 }
 
-.stButton button:hover {
-    background-color: #1B5E20;
+.stButton > button:hover {
+    background-color: #143016;
 }
 
-/* Course details styling */
-.course-header {
-    background-color: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
-    color: #1a1a1a;
-    text-align: left;
-}
-
-.course-stats {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.stat-item {
-    background-color: #ffffff;
-    padding: 1rem 1.5rem;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #1a1a1a;
-    margin-bottom: 1rem;
-}
-
-/* Review section styling */
-.review-card {
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #1a1a1a;
-}
-
-/* Form styling */
+/* Form elements */
 [data-testid="stForm"] {
     background-color: #ffffff;
     padding: 1.5rem;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #1a1a1a;
-    margin-bottom: 1.5rem;
+    margin: 1rem 0;
 }
 
-/* Text input styling */
-[data-testid="stTextInput"] input {
-    border-radius: 5px;
-    color: #1a1a1a;
+/* Input fields */
+[data-testid="stTextInput"] > div > div > input {
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: #1f2937;
 }
 
-/* Expander styling */
-[data-testid="stExpander"] {
+/* Course details section */
+.course-header {
     background-color: #ffffff;
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #1a1a1a;
 }
 
-/* General text styling */
-p, h1, h2, h3, h4, h5, h6 {
-    color: #1a1a1a;
+.course-header h3 {
+    color: #1e4620;
+    font-size: 1.75rem;
     margin-bottom: 1rem;
+    font-weight: 600;
 }
 
-[data-testid="stMarkdown"] {
-    color: #1a1a1a;
+.course-header p {
+    color: #374151;
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
-/* Search and filter styling */
-.search-container {
-    background-color: #f8f9fa;
+/* Stat items */
+.stat-item {
+    background-color: #ffffff;
     padding: 1.5rem;
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
-    color: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    height: 100%;
 }
 
-/* Amenities styling */
-.amenity-tag {
-    background-color: #E8F5E9;
-    color: #1B5E20;
-    padding: 0.75rem;
-    border-radius: 5px;
-    font-weight: 500;
+.stat-item h4 {
+    color: #1e4620;
+    font-weight: 600;
     margin-bottom: 1rem;
+}
+
+/* Amenity tags */
+.amenity-tag {
+    background-color: #ecfdf5;
+    color: #065f46;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0.25rem;
+    display: inline-block;
 }
 
 /* Tab styling */
 [data-testid="stTabs"] {
-    margin-top: 1.5rem;
+    margin: 1rem 0;
 }
 
 [data-testid="stTab"] {
+    background-color: #f9fafb;
+    border-radius: 4px 4px 0 0;
     padding: 1rem 1.5rem;
+    font-weight: 500;
+}
+
+[data-testid="stTab"][aria-selected="true"] {
+    background-color: #ffffff;
+    border-bottom: 2px solid #1e4620;
+    color: #1e4620;
 }
 
 /* Header section */
 .header-section {
     background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 5px;
+    padding: 2.5rem;
+    border-radius: 8px;
     margin-bottom: 2rem;
-    text-align: left;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .header-section h1 {
-    color: #2E7D32;
-    margin-bottom: 1.5rem;
+    color: #1e4620;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
 .header-section p {
-    color: #1a1a1a;
+    color: #374151;
     font-size: 1.2rem;
+    line-height: 1.6;
 }
 
-/* Footer styling */
+/* Reviews section */
+.review-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Footer section */
 .footer-section {
-    text-align: left;
-    padding: 2rem 0;
+    border-top: 1px solid #e5e7eb;
     margin-top: 3rem;
-    border-top: 1px solid #eee;
-    color: #1a1a1a;
+    padding: 2rem 0;
+    color: #6b7280;
+}
+
+/* Map container */
+[data-testid="stMap"] {
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
