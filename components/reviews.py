@@ -23,7 +23,7 @@ def show_course_reviews(course_name):
             if user_name and comment:
                 if add_review(course_name, user_name, rating, comment):
                     st.success("Review submitted successfully!")
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     st.error("Failed to submit review. Please try again.")
             else:

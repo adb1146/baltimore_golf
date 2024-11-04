@@ -43,7 +43,7 @@ def show_tee_times(course_name):
                             if user_name:
                                 if book_tee_time(tee_time.id, user_name):
                                     st.success("Tee time booked successfully!")
-                                    st.experimental_rerun()
+                                    st.rerun()
                                 else:
                                     st.error("Failed to book tee time")
                             else:
