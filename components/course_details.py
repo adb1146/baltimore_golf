@@ -5,8 +5,8 @@ def show_course_details(course):
     # Course header
     st.markdown(f"""
         <div class='course-header'>
-            <h3 style='color: #2E7D32; margin-bottom: 1rem;'>{course['name']}</h3>
-            <p style='color: #333;'>{course['description']}</p>
+            <h3>{course['name']}</h3>
+            <p>{course['description']}</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -16,48 +16,43 @@ def show_course_details(course):
     with col1:
         st.markdown("""
             <div class='stat-item'>
-                <h4 style='color: #2E7D32; margin-bottom: 0.5rem;'>Location & Contact</h4>
+                <h4>Location & Contact</h4>
+                <p>📍 <strong>Address:</strong></p>
+                <p style='color: #1a1a1a; margin-left: 1.5rem;'>{address}</p>
+                <p>📞 <strong>Phone:</strong></p>
+                <p style='color: #1a1a1a; margin-left: 1.5rem;'>{phone}</p>
             </div>
-        """, unsafe_allow_html=True)
-        st.markdown(f"""
-            <div style='color: #333;'>
-                <p>📍 <strong>Address:</strong> {course['address']}</p>
-                <p>📞 <strong>Phone:</strong> {course['phone']}</p>
-            </div>
-        """, unsafe_allow_html=True)
+        """.format(
+            address=course['address'],
+            phone=course['phone']
+        ), unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
             <div class='stat-item'>
-                <h4 style='color: #2E7D32; margin-bottom: 0.5rem;'>Course Details</h4>
+                <h4>Course Details</h4>
+                <p>🏌️ <strong>Holes:</strong> {holes}</p>
+                <p>🎯 <strong>Par:</strong> {par}</p>
             </div>
-        """, unsafe_allow_html=True)
-        st.markdown(f"""
-            <div style='color: #333;'>
-                <p>🏌️ <strong>Holes:</strong> {course['holes']}</p>
-                <p>🎯 <strong>Par:</strong> {course['par']}</p>
-            </div>
-        """, unsafe_allow_html=True)
+        """.format(
+            holes=course['holes'],
+            par=course['par']
+        ), unsafe_allow_html=True)
     
     with col3:
         st.markdown("""
             <div class='stat-item'>
-                <h4 style='color: #2E7D32; margin-bottom: 0.5rem;'>Pricing</h4>
+                <h4>Pricing</h4>
+                <p>💰 <strong>Weekday:</strong> ${weekday}</p>
+                <p>💰 <strong>Weekend:</strong> ${weekend}</p>
             </div>
-        """, unsafe_allow_html=True)
-        st.markdown(f"""
-            <div style='color: #333;'>
-                <p>💰 <strong>Weekday:</strong> ${course['weekday_price']}</p>
-                <p>💰 <strong>Weekend:</strong> ${course['weekend_price']}</p>
-            </div>
-        """, unsafe_allow_html=True)
+        """.format(
+            weekday=course['weekday_price'],
+            weekend=course['weekend_price']
+        ), unsafe_allow_html=True)
     
     # Amenities section
-    st.markdown("""
-        <div style='margin-top: 1rem;'>
-            <h4 style='color: #2E7D32; margin-bottom: 0.5rem;'>Amenities</h4>
-        </div>
-    """, unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #1a1a1a; margin: 2rem 0 1rem 0;'>Amenities</h4>", unsafe_allow_html=True)
     
     amenities_list = course['amenities'].split(', ')
     cols = st.columns(len(amenities_list))

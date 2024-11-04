@@ -36,10 +36,10 @@ df = load_golf_courses()
 # Apply filters and get selected course from sidebar
 filtered_df, selected_course = show_filters(df)
 
-# Create main content area with adjusted proportions
-sidebar_col, main_col = st.columns([1, 3])
+# Create main content area
+main_container = st.container()
 
-with main_col:
+with main_container:
     # Show map at the top with proper spacing
     st.markdown("<div style='margin: 1rem 0;'>", unsafe_allow_html=True)
     show_map(filtered_df)
@@ -49,31 +49,37 @@ with main_col:
     if selected_course:
         course_data = df[df['name'] == selected_course].iloc[0]
         
-        # Create tabs with improved spacing
+        # Create tabs with improved contrast
         st.markdown("<div style='margin: 2rem 0;'>", unsafe_allow_html=True)
-        info_tab, tee_times_tab, reviews_tab, photos_tab = st.tabs([
+        tabs = st.tabs([
             "📌 Course Info",
             "🕒 Tee Times",
             "⭐ Reviews",
             "📸 Photos & Holes"
         ])
         
-        with info_tab:
+        with tabs[0]:
             show_course_details(course_data)
             
-        with tee_times_tab:
+        with tabs[1]:
             show_tee_times(selected_course)
             
-        with reviews_tab:
+        with tabs[2]:
             show_course_reviews(selected_course)
             
-        with photos_tab:
+        with tabs[3]:
             show_course_photos_and_holes(selected_course)
         st.markdown("</div>", unsafe_allow_html=True)
     else:
-        st.info("Please select a course from the sidebar to view details.")
+        st.markdown("""
+            <div style='background-color: #ffffff; padding: 2rem; border-radius: 8px; text-align: center;'>
+                <p style='color: #1a1a1a; font-size: 1.1rem;'>
+                    Please select a course from the sidebar to view details.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
 
-# Footer with improved spacing and contrast
+# Footer with improved contrast
 st.markdown("""
     <div class='footer-section'>
         <p>
