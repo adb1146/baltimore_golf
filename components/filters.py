@@ -3,13 +3,18 @@ import streamlit as st
 def show_filters(df):
     st.sidebar.header("Course Selection & Filters")
     
-    # Multiple course selection
+    # Multiple course selection with key
     selected_courses = st.sidebar.multiselect(
         "Select Courses",
         options=df['name'].tolist(),
         default=st.session_state.get('selected_courses', []),
+        key='course_selector',
         help="Choose one or more golf courses to view details"
     )
+    
+    # Update session state immediately after selection
+    if selected_courses != st.session_state.get('selected_courses', []):
+        st.session_state['selected_courses'] = selected_courses
     
     # Reset button for filters
     if st.sidebar.button("Reset All Filters", key="reset_filters"):
@@ -69,7 +74,6 @@ def show_filters(df):
     # Further filter by selected courses if any are selected
     if selected_courses:
         filtered_df = filtered_df[filtered_df['name'].isin(selected_courses)]
-        st.session_state['selected_courses'] = selected_courses
     
     # Apply sorting
     if sort_by == "Name":
