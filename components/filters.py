@@ -16,6 +16,21 @@ def show_filters(df):
     if selected_courses != st.session_state.get('selected_courses', []):
         st.session_state['selected_courses'] = selected_courses
     
+    # Display selected courses with remove buttons
+    if selected_courses:
+        st.sidebar.markdown("### Selected Courses:")
+        for course in selected_courses:
+            col1, col2 = st.sidebar.columns([3, 1])
+            with col1:
+                st.markdown(f"- {course}")
+            with col2:
+                if st.button("Remove", key=f"remove_{course}", help=f"Remove {course} from selection"):
+                    selected_courses.remove(course)
+                    st.session_state['selected_courses'] = selected_courses
+                    st.rerun()
+    else:
+        st.sidebar.info("No courses selected")
+    
     # Reset button for filters
     if st.sidebar.button("Reset All Filters", key="reset_filters"):
         # Clear all selections and reset to defaults
