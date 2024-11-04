@@ -1,6 +1,6 @@
 /* Main theme customization */
 [data-testid="stSidebar"] {
-    background-color: #ffffff;
+    background-color: #f8f9fa;
     padding: 2rem 1.5rem;
     border-right: 1px solid #e0e3e9;
 }
@@ -11,11 +11,22 @@
 
 [data-testid="stSidebar"] .stSelectbox label {
     color: #1a1a1a !important;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1rem;
 }
 
 [data-testid="stSidebar"] .stSelectbox span {
     color: #1a1a1a !important;
+}
+
+[data-testid="stSidebar"] h1, 
+[data-testid="stSidebar"] h2, 
+[data-testid="stSidebar"] h3, 
+[data-testid="stSidebar"] h4 {
+    color: #1a1a1a;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .main .block-container {
@@ -56,6 +67,28 @@
     border-radius: 4px;
     padding: 0.5rem;
     color: #1a1a1a;
+}
+
+/* Sidebar specific elements */
+[data-testid="stSidebar"] [data-testid="stSlider"] label,
+[data-testid="stSidebar"] [data-testid="stMultiSelect"] label {
+    color: #1a1a1a !important;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+[data-testid="stSidebar"] .stSlider div[data-baseweb="slider"] {
+    margin-top: 1rem;
+}
+
+[data-testid="stSidebar"] [data-testid="stMultiSelect"] div[role="listbox"] {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+}
+
+[data-testid="stSidebar"] [data-testid="stMultiSelect"] div[role="listbox"] span {
+    color: #1a1a1a !important;
 }
 
 /* Course details section */
