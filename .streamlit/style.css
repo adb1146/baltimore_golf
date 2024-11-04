@@ -2,11 +2,25 @@
 [data-testid="stSidebar"] {
     background-color: #f8f9fa;
     padding: 2rem 1rem;
-    color: #333;
+    color: #1a1a1a;
 }
 
 [data-testid="stSidebar"] [data-testid="stMarkdown"] {
-    color: #333;
+    color: #1a1a1a;
+}
+
+[data-testid="stVerticalBlock"] {
+    text-align: left !important;
+}
+
+.element-container {
+    text-align: left !important;
+}
+
+.main .block-container {
+    text-align: left;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .stButton button {
@@ -25,34 +39,36 @@
 /* Course details styling */
 .course-header {
     background-color: #f8f9fa;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 5px;
-    margin-bottom: 1rem;
-    color: #333;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    text-align: left;
 }
 
 .course-stats {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
 }
 
 .stat-item {
     background-color: #ffffff;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1.5rem;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #333;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
 }
 
 /* Review section styling */
 .review-card {
     background-color: #ffffff;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 5px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #333;
+    color: #1a1a1a;
 }
 
 /* Form styling */
@@ -61,50 +77,61 @@
     padding: 1.5rem;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #333;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
 }
 
 /* Text input styling */
 [data-testid="stTextInput"] input {
     border-radius: 5px;
-    color: #333;
+    color: #1a1a1a;
 }
 
 /* Expander styling */
 [data-testid="stExpander"] {
     background-color: #ffffff;
     border-radius: 5px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    color: #333;
+    color: #1a1a1a;
 }
 
 /* General text styling */
 p, h1, h2, h3, h4, h5, h6 {
-    color: #333;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
 }
 
 [data-testid="stMarkdown"] {
-    color: #333;
+    color: #1a1a1a;
 }
 
 /* Search and filter styling */
 .search-container {
     background-color: #f8f9fa;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 5px;
-    margin-bottom: 1rem;
-    color: #333;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
 }
 
 /* Amenities styling */
 .amenity-tag {
     background-color: #E8F5E9;
-    color: #2E7D32;
-    padding: 0.5rem;
+    color: #1B5E20;
+    padding: 0.75rem;
     border-radius: 5px;
-    text-align: center;
     font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* Tab styling */
+[data-testid="stTabs"] {
+    margin-top: 1.5rem;
+}
+
+[data-testid="stTab"] {
+    padding: 1rem 1.5rem;
 }
 
 /* Header section */
@@ -113,24 +140,24 @@ p, h1, h2, h3, h4, h5, h6 {
     padding: 2rem;
     border-radius: 5px;
     margin-bottom: 2rem;
-    text-align: center;
+    text-align: left;
 }
 
 .header-section h1 {
     color: #2E7D32;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .header-section p {
-    color: #666;
+    color: #1a1a1a;
     font-size: 1.2rem;
 }
 
 /* Footer styling */
 .footer-section {
-    text-align: center;
+    text-align: left;
     padding: 2rem 0;
     margin-top: 3rem;
     border-top: 1px solid #eee;
-    color: #666;
+    color: #1a1a1a;
 }

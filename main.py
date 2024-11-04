@@ -19,11 +19,11 @@ st.set_page_config(
 with open('.streamlit/style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-# Title and introduction with enhanced styling
+# Title and introduction
 st.markdown("""
-    <div style='text-align: center; padding: 1rem 0;'>
-        <h1 style='color: #2E7D32;'>⛳ Baltimore Area Golf Courses</h1>
-        <p style='font-size: 1.2rem; color: #666;'>
+    <div class='header-section'>
+        <h1>⛳ Baltimore Area Golf Courses</h1>
+        <p>
             Explore public golf courses in the Baltimore area. Select a course from the sidebar to view detailed information.
         </p>
     </div>
@@ -68,10 +68,10 @@ with main_col:
     else:
         st.info("Please select a course from the sidebar to view details.")
 
-# Footer with enhanced styling
+# Footer
 st.markdown("""
-    <div style='text-align: center; padding: 1rem 0; margin-top: 2rem; border-top: 1px solid #eee;'>
-        <p style='color: #666; font-size: 0.9rem;'>
+    <div class='footer-section'>
+        <p>
             Data is for demonstration purposes only. Please contact individual courses to verify 
             current prices and availability.
         </p>
