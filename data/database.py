@@ -76,28 +76,35 @@ def get_course_average_rating(course_name):
         session.close()
 
 def generate_tee_times(course_name, date):
-    """Generate tee times for a specific course and date"""
+    """Generate tee times for a specific course and date while preserving existing bookings"""
     session = Session()
     try:
-        # Delete existing tee times for this course and date
+        # Get the time range for the day
         start_of_day = datetime.combine(date, datetime.min.time())
         end_of_day = datetime.combine(date, datetime.max.time())
-        session.query(TeeTime).filter(
+        
+        # Get existing tee times for this course and date
+        existing_times = session.query(TeeTime).filter(
             TeeTime.course_name == course_name,
             TeeTime.tee_time.between(start_of_day, end_of_day)
-        ).delete()
+        ).all()
         
-        # Generate new tee times from 7 AM to 5 PM with 10-minute intervals
+        # Convert existing times to a set for easy lookup
+        existing_time_set = {tee_time.tee_time for tee_time in existing_times}
+        
+        # Generate time slots from 7 AM to 5 PM with 10-minute intervals
         current_time = datetime.combine(date, datetime.min.time().replace(hour=7))
         end_time = datetime.combine(date, datetime.min.time().replace(hour=17))
         
         while current_time <= end_time:
-            tee_time = TeeTime(
-                course_name=course_name,
-                tee_time=current_time,
-                available=True
-            )
-            session.add(tee_time)
+            # Only create new time slot if it doesn't exist
+            if current_time not in existing_time_set:
+                tee_time = TeeTime(
+                    course_name=course_name,
+                    tee_time=current_time,
+                    available=True
+                )
+                session.add(tee_time)
             current_time += timedelta(minutes=10)
         
         session.commit()
@@ -109,7 +116,7 @@ def generate_tee_times(course_name, date):
         session.close()
 
 def get_available_tee_times(course_name, date):
-    """Get available tee times for a specific course and date"""
+    """Get all tee times (both available and booked) for a specific course and date"""
     session = Session()
     try:
         start_of_day = datetime.combine(date, datetime.min.time())

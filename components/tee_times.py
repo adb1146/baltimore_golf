@@ -24,7 +24,7 @@ def show_tee_times(course_name):
     tee_times = get_available_tee_times(course_name, selected_date)
     
     if tee_times:
-        st.write("Available Tee Times:")
+        st.write("Tee Times:")
         
         # Create columns for better organization
         cols = st.columns(4)
@@ -49,6 +49,7 @@ def show_tee_times(course_name):
                             else:
                                 st.warning("Please enter your name")
                 else:
-                    st.write(f"🕒 {time_str} (Booked)")
+                    st.write(f"🕒 {time_str}")
+                    st.write(f"Booked by: {tee_time.booked_by}")
     else:
         st.info("No tee times available for the selected date. Click 'Generate Tee Times' to create new time slots.")
