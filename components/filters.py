@@ -7,7 +7,7 @@ def show_filters(df):
     selected_courses = st.sidebar.multiselect(
         "Select Courses",
         options=df['name'].tolist(),
-        default=[],
+        default=st.session_state.get('selected_courses', []),
         help="Choose one or more golf courses to view details"
     )
     
@@ -21,6 +21,7 @@ def show_filters(df):
             int(df['weekday_price'].max())
         )
         st.session_state['selected_amenities'] = []
+        # Force a rerun to update the UI
         st.rerun()
     
     # Sort options
@@ -66,6 +67,8 @@ def show_filters(df):
     # Further filter by selected courses if any are selected
     if selected_courses:
         filtered_df = filtered_df[filtered_df['name'].isin(selected_courses)]
+        # Update session state with selected courses
+        st.session_state['selected_courses'] = selected_courses
     
     # Apply sorting
     if sort_by == "Name":
@@ -75,7 +78,5 @@ def show_filters(df):
     else:
         filtered_df = filtered_df.sort_values('weekend_price')
     
-    # Return the filtered dataframe and the first selected course (if any) for detailed view
-    selected_course = selected_courses[0] if selected_courses else None
-    
-    return filtered_df, selected_course
+    # Return the filtered dataframe and all selected courses
+    return filtered_df, selected_courses
