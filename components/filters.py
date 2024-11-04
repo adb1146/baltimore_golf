@@ -3,28 +3,39 @@ import streamlit as st
 def show_filters(df):
     st.sidebar.header("Course Selection & Filters")
     
-    # Multiple course selection with key
-    selected_courses = st.sidebar.multiselect(
+    # Get current selected courses from session state
+    selected_courses = st.session_state.get('selected_courses', [])
+    
+    # Get available courses (excluding selected ones)
+    available_courses = [c for c in df['name'].tolist() if c not in selected_courses]
+
+    # Update multiselect to only show available courses
+    selected_new_courses = st.sidebar.multiselect(
         "Select Courses",
-        options=df['name'].tolist(),
-        default=st.session_state.get('selected_courses', []),
+        options=available_courses,
+        default=[],
         key='course_selector',
         help="Choose one or more golf courses to view details"
     )
-    
-    # Update session state immediately after selection
-    if selected_courses != st.session_state.get('selected_courses', []):
+
+    # Add newly selected courses to the list
+    if selected_new_courses:
+        selected_courses.extend(selected_new_courses)
         st.session_state['selected_courses'] = selected_courses
+        st.rerun()
     
     # Display selected courses with remove buttons
     if selected_courses:
         st.sidebar.markdown("### Selected Courses:")
         for course in selected_courses:
-            col1, col2 = st.sidebar.columns([3, 1])
+            col1, col2 = st.sidebar.columns([4, 1])
             with col1:
                 st.markdown(f"- {course}")
             with col2:
-                if st.button("Remove", key=f"remove_{course}", help=f"Remove {course} from selection"):
+                if st.button("×", key=f"remove_{course}", 
+                    help=f"Remove {course}", 
+                    type="secondary",
+                    use_container_width=False):
                     selected_courses.remove(course)
                     st.session_state['selected_courses'] = selected_courses
                     st.rerun()

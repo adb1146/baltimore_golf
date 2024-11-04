@@ -63,16 +63,15 @@
 }
 
 /* Small remove button styling */
-.stButton.remove-button > button {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    margin: 0.25rem 0;
+.stButton.small-remove > button {
+    padding: 0.15rem 0.3rem;
+    font-size: 0.75rem;
+    min-height: 0;
+    width: auto;
     background-color: #dc3545;
+    margin: 0;
 }
 
-.stButton.remove-button > button:hover {
+.stButton.small-remove > button:hover {
     background-color: #bb2d3b;
 }
-
-/* Rest of the existing CSS styles... */
-[Previous CSS content continues...]
