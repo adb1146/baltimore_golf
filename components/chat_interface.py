@@ -36,6 +36,10 @@ def get_ai_response(messages):
     except Exception as e:
         return f"I apologize, but I'm having trouble processing your request. Please try again later."
 
+def clear_chat():
+    st.session_state.chat_history = []
+    st.rerun()
+
 def show_chat_interface():
     st.write("### 🤖 Golf Course Assistant")
     st.write("Ask about courses, get recommendations, or inquire about specific features!")
@@ -73,44 +77,23 @@ def show_chat_interface():
     - Special features
     
     Provide recommendations and then guide users to select courses using the sidebar."""
-    
-    # Chat container with custom styling
-    chat_container = st.container()
-    
-    with chat_container:
-        # Display chat history with improved contrast
-        for message in st.session_state.chat_history:
-            role = message["role"]
-            content = message["content"]
-            
-            if role == "user":
-                st.markdown("""
-                    <div style='background-color: #e9ecef; padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>
-                        <strong style='color: #1a1a1a;'>You:</strong><br>
-                        <span style='color: #1a1a1a;'>{content}</span>
-                    </div>
-                """.format(content=content), unsafe_allow_html=True)
-            else:
-                st.markdown("""
-                    <div style='background-color: #ffffff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border: 1px solid #dee2e6;'>
-                        <strong style='color: #1a1a1a;'>Assistant:</strong><br>
-                        <span style='color: #1a1a1a;'>{content}</span>
-                    </div>
-                """.format(content=content), unsafe_allow_html=True)
-    
+
     # Chat input form
     with st.form(key='chat_form', clear_on_submit=True):
-        col1, col2 = st.columns([5, 1])
-        
-        with col1:
+        cols = st.columns([5, 1])
+        with cols[0]:
             user_input = st.text_input(
                 "Type your question here:",
                 placeholder="e.g., What courses have driving ranges?",
-                key="chat_input"
+                key="chat_input",
+                label_visibility="collapsed"
             )
-        
-        with col2:
-            submit_button = st.form_submit_button("Send")
+        with cols[1]:
+            submit_button = st.form_submit_button(
+                "Send",
+                use_container_width=True,
+                type="primary"
+            )
 
         if submit_button and user_input:
             # Add user message to history
@@ -127,8 +110,30 @@ def show_chat_interface():
             
             # Add AI response to history
             st.session_state.chat_history.append({"role": "assistant", "content": ai_response})
-    
-    # Clear button outside the form
-    if st.button("Clear Chat"):
-        st.session_state.chat_history = []
-        st.rerun()
+            st.rerun()
+
+    # Clear chat button
+    st.button("Clear Chat", key="clear_chat", on_click=clear_chat)
+
+    # Display chat history below the form
+    if st.session_state.chat_history:
+        for message in reversed(st.session_state.chat_history):
+            role = message["role"]
+            content = message["content"]
+            
+            if role == "user":
+                st.markdown(
+                    "<div style='background-color: #e9ecef; padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>"
+                    f"<strong style='color: #1a1a1a;'>You:</strong><br>"
+                    f"<span style='color: #1a1a1a;'>{content}</span>"
+                    "</div>",
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    "<div style='background-color: #ffffff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border: 1px solid #dee2e6;'>"
+                    f"<strong style='color: #1a1a1a;'>Assistant:</strong><br>"
+                    f"<span style='color: #1a1a1a;'>{content}</span>"
+                    "</div>",
+                    unsafe_allow_html=True
+                )
