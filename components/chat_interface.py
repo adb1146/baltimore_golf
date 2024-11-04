@@ -3,21 +3,24 @@ import openai
 import os
 from data.golf_courses import load_golf_courses
 
-def get_course_info(course_name):
-    """Get detailed information about a specific course"""
+def get_all_courses_info():
+    """Get detailed information about all courses"""
     df = load_golf_courses()
-    course = df[df['name'] == course_name].iloc[0]
-    return {
-        'name': course['name'],
-        'address': course['address'],
-        'phone': course['phone'],
-        'holes': course['holes'],
-        'par': course['par'],
-        'weekday_price': course['weekday_price'],
-        'weekend_price': course['weekend_price'],
-        'amenities': course['amenities'],
-        'description': course['description']
-    }
+    courses_info = []
+    
+    for _, course in df.iterrows():
+        courses_info.append({
+            'name': course['name'],
+            'address': course['address'],
+            'phone': course['phone'],
+            'holes': course['holes'],
+            'par': course['par'],
+            'weekday_price': course['weekday_price'],
+            'weekend_price': course['weekend_price'],
+            'amenities': course['amenities'],
+            'description': course['description']
+        })
+    return courses_info
 
 def get_ai_response(messages):
     """Get response from OpenAI API"""
@@ -27,51 +30,80 @@ def get_ai_response(messages):
             model="gpt-3.5-turbo",
             messages=messages,
             temperature=0.7,
-            max_tokens=150
+            max_tokens=250
         )
         return response.choices[0].message.content
     except Exception as e:
         return f"I apologize, but I'm having trouble processing your request. Please try again later."
 
-def show_chat_interface(course_name):
-    st.write("### Golf Course Assistant")
-    st.write("Ask questions about the course, tee times, amenities, or anything else!")
+def show_chat_interface():
+    st.write("### 🤖 Golf Course Assistant")
+    st.write("Ask about courses, get recommendations, or inquire about specific features!")
     
     # Initialize chat history in session state
     if 'chat_history' not in st.session_state:
         st.session_state.chat_history = []
         
-    # Get course information
-    course_info = get_course_info(course_name)
+    # Get all courses information
+    courses_info = get_all_courses_info()
     
-    # System message with course information
-    system_message = f"""You are a helpful golf course assistant for {course_name}. 
-    Here are the course details:
-    - Address: {course_info['address']}
-    - Phone: {course_info['phone']}
-    - Holes: {course_info['holes']}
-    - Par: {course_info['par']}
-    - Weekday Price: ${course_info['weekday_price']}
-    - Weekend Price: ${course_info['weekend_price']}
-    - Amenities: {course_info['amenities']}
-    - Description: {course_info['description']}
+    # Create a formatted string of course information
+    courses_data = "\n\n".join([
+        f"Course: {course['name']}\n"
+        f"Location: {course['address']}\n"
+        f"Pricing: Weekday ${course['weekday_price']}, Weekend ${course['weekend_price']}\n"
+        f"Details: {course['holes']} holes, Par {course['par']}\n"
+        f"Amenities: {course['amenities']}\n"
+        f"Description: {course['description']}"
+        for course in courses_info
+    ])
     
-    Provide helpful, concise responses about the course. If asked about something not in the data, 
-    suggest contacting the course directly at {course_info['phone']}.
-    """
+    # System message with all courses information
+    system_message = f"""You are a helpful golf course assistant for Baltimore area golf courses.
+    You have access to information about all courses and can help users find the right course for their needs.
+    Here are all the available courses and their details:
     
-    # Display chat history
-    for message in st.session_state.chat_history:
-        role = message["role"]
-        content = message["content"]
-        
-        if role == "user":
-            st.write(f"You: {content}")
-        else:
-            st.write(f"Assistant: {content}")
+    {courses_data}
     
-    # Chat input
-    user_input = st.text_input("Type your question here:", key=f"chat_input_{course_name}")
+    Help users find suitable courses based on their preferences such as:
+    - Location/area
+    - Price range
+    - Amenities
+    - Difficulty level
+    - Special features
+    
+    Provide recommendations and then guide users to select courses using the sidebar."""
+    
+    # Chat container with custom styling
+    chat_container = st.container()
+    
+    with chat_container:
+        # Display chat history
+        for message in st.session_state.chat_history:
+            role = message["role"]
+            content = message["content"]
+            
+            if role == "user":
+                st.markdown("""
+                    <div style='background-color: #e9ecef; padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>
+                        <strong>You:</strong><br>
+                        {content}
+                    </div>
+                """.format(content=content), unsafe_allow_html=True)
+            else:
+                st.markdown("""
+                    <div style='background-color: #ffffff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border: 1px solid #dee2e6;'>
+                        <strong>Assistant:</strong><br>
+                        {content}
+                    </div>
+                """.format(content=content), unsafe_allow_html=True)
+    
+    # Chat input and controls
+    col1, col2 = st.columns([5, 1])
+    with col1:
+        user_input = st.text_input("Type your question here:", placeholder="e.g., What courses have driving ranges?")
+    with col2:
+        clear_button = st.button("Clear Chat", use_container_width=True)
     
     if user_input:
         # Add user message to history
@@ -92,7 +124,6 @@ def show_chat_interface(course_name):
         # Rerun to update chat display
         st.rerun()
     
-    # Clear chat button
-    if st.button("Clear Chat", key=f"clear_chat_{course_name}"):
+    if clear_button:
         st.session_state.chat_history = []
         st.rerun()

@@ -49,7 +49,12 @@ filtered_df, selected_courses = show_filters(df)
 main_container = st.container()
 
 with main_container:
-    # Show map at the top with proper spacing
+    # Show chat interface at the top
+    st.markdown("<div style='margin: 1rem 0; padding: 1.5rem; background-color: #f8f9fa; border-radius: 8px;'>", unsafe_allow_html=True)
+    show_chat_interface()
+    st.markdown("</div>", unsafe_allow_html=True)
+    
+    # Show map below chat interface
     st.markdown("<div style='margin: 1rem 0;'>", unsafe_allow_html=True)
     show_map(filtered_df)
     st.markdown("</div>", unsafe_allow_html=True)
@@ -75,8 +80,7 @@ with main_container:
                 "📌 Course Info",
                 "🕒 Tee Times",
                 "⭐ Reviews",
-                "📸 Photos & Holes",
-                "💬 Chat"
+                "📸 Photos & Holes"
             ])
             
             with tabs[0]:
@@ -90,9 +94,6 @@ with main_container:
                 
             with tabs[3]:
                 show_course_photos_and_holes(course_name)
-                
-            with tabs[4]:
-                show_chat_interface(course_name)
     else:
         st.markdown("""
             <div style='background-color: #ffffff; padding: 2rem; border-radius: 8px; text-align: center;'>
