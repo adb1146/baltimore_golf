@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, ForeignKey, Boolean
+from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, ForeignKey, Boolean, Text, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime, timedelta
@@ -32,6 +32,16 @@ class TeeTime(Base):
     available = Column(Boolean, default=True)
     booked_by = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class CourseDetail(Base):
+    __tablename__ = 'course_details'
+    
+    id = Column(Integer, primary_key=True)
+    course_name = Column(String, nullable=False, unique=True)
+    photos = Column(JSON)  # Store photo URLs as JSON array
+    hole_descriptions = Column(JSON)  # Store hole descriptions as JSON object
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 # Create tables
 Base.metadata.create_all(engine)
@@ -140,6 +150,40 @@ def book_tee_time(tee_time_id, user_name):
             session.commit()
             return True
         return False
+    except Exception as e:
+        session.rollback()
+        return False
+    finally:
+        session.close()
+
+def get_course_details(course_name):
+    """Get course photos and hole descriptions"""
+    session = Session()
+    try:
+        details = session.query(CourseDetail).filter(CourseDetail.course_name == course_name).first()
+        return details
+    finally:
+        session.close()
+
+def update_course_details(course_name, photos=None, hole_descriptions=None):
+    """Update or create course details"""
+    session = Session()
+    try:
+        details = session.query(CourseDetail).filter(CourseDetail.course_name == course_name).first()
+        if details:
+            if photos is not None:
+                details.photos = photos
+            if hole_descriptions is not None:
+                details.hole_descriptions = hole_descriptions
+        else:
+            details = CourseDetail(
+                course_name=course_name,
+                photos=photos or [],
+                hole_descriptions=hole_descriptions or {}
+            )
+            session.add(details)
+        session.commit()
+        return True
     except Exception as e:
         session.rollback()
         return False

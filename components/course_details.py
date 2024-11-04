@@ -1,6 +1,7 @@
 import streamlit as st
 from components.reviews import show_course_reviews
 from components.tee_times import show_tee_times
+from components.course_photos import show_course_photos_and_holes
 
 def show_course_details(df):
     st.header("Golf Courses")
@@ -40,6 +41,10 @@ def show_course_details(df):
                 st.write("**Weekday Price:** $", course['weekday_price'])
                 st.write("**Weekend Price:** $", course['weekend_price'])
                 st.write("**Amenities:**", course['amenities'])
+            
+            # Add photos and hole descriptions section
+            st.markdown("---")
+            show_course_photos_and_holes(course['name'])
             
             # Add tee times section
             st.markdown("---")
