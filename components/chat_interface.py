@@ -78,7 +78,7 @@ def show_chat_interface():
     chat_container = st.container()
     
     with chat_container:
-        # Display chat history
+        # Display chat history with improved contrast
         for message in st.session_state.chat_history:
             role = message["role"]
             content = message["content"]
@@ -86,34 +86,42 @@ def show_chat_interface():
             if role == "user":
                 st.markdown("""
                     <div style='background-color: #e9ecef; padding: 1rem; border-radius: 8px; margin: 0.5rem 0;'>
-                        <strong>You:</strong><br>
-                        {content}
+                        <strong style='color: #1a1a1a;'>You:</strong><br>
+                        <span style='color: #1a1a1a;'>{content}</span>
                     </div>
                 """.format(content=content), unsafe_allow_html=True)
             else:
                 st.markdown("""
                     <div style='background-color: #ffffff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border: 1px solid #dee2e6;'>
-                        <strong>Assistant:</strong><br>
-                        {content}
+                        <strong style='color: #1a1a1a;'>Assistant:</strong><br>
+                        <span style='color: #1a1a1a;'>{content}</span>
                     </div>
                 """.format(content=content), unsafe_allow_html=True)
     
     # Chat input and controls
     col1, col2 = st.columns([5, 1])
+    
     with col1:
-        user_input = st.text_input("Type your question here:", placeholder="e.g., What courses have driving ranges?")
+        user_input = st.text_input(
+            "Type your question here:",
+            placeholder="e.g., What courses have driving ranges?",
+            key="chat_input"
+        )
+        
     with col2:
         clear_button = st.button("Clear Chat", use_container_width=True)
     
+    # Handle user input without rerun
     if user_input:
         # Add user message to history
         st.session_state.chat_history.append({"role": "user", "content": user_input})
         
         # Prepare messages for API
         messages = [
-            {"role": "system", "content": system_message},
+            {"role": "system", "content": system_message}
         ]
-        messages.extend(st.session_state.chat_history)
+        # Add relevant history for context but limit to last few messages
+        messages.extend(st.session_state.chat_history[-5:])
         
         # Get AI response
         ai_response = get_ai_response(messages)
@@ -121,9 +129,9 @@ def show_chat_interface():
         # Add AI response to history
         st.session_state.chat_history.append({"role": "assistant", "content": ai_response})
         
-        # Rerun to update chat display
-        st.rerun()
+        # Clear the input
+        st.session_state.chat_input = ""
     
+    # Handle clear button
     if clear_button:
         st.session_state.chat_history = []
-        st.rerun()
