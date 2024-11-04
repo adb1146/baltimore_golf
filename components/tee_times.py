@@ -9,11 +9,12 @@ def show_tee_times(course_name):
     selected_date = st.date_input(
         "Select Date",
         min_value=date.today(),
-        value=date.today()
+        value=date.today(),
+        key=f"date_input_{course_name}"
     )
     
     # Generate tee times button
-    if st.button("Generate Tee Times"):
+    if st.button("Generate Tee Times", key=f"generate_button_{course_name}"):
         if generate_tee_times(course_name, selected_date):
             st.success("Tee times generated successfully!")
         else:
@@ -33,9 +34,9 @@ def show_tee_times(course_name):
                 time_str = tee_time.tee_time.strftime("%I:%M %p")
                 if tee_time.available:
                     # Create a unique key for each booking form
-                    with st.form(key=f"booking_form_{tee_time.id}"):
+                    with st.form(key=f"booking_form_{tee_time.id}_{course_name}"):
                         st.write(f"🕒 {time_str}")
-                        user_name = st.text_input("Your Name", key=f"name_{tee_time.id}")
+                        user_name = st.text_input("Your Name", key=f"name_{tee_time.id}_{course_name}")
                         book_button = st.form_submit_button("Book")
                         
                         if book_button:
