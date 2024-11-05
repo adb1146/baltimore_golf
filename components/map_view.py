@@ -12,8 +12,8 @@ def show_map(filtered_df):
     # Create a map centered on Maryland with bounds restrictions
     m = folium.Map(
         location=[39.0458, -76.6413],
-        zoom_start=10,  # Increased from 8 to 10 for closer initial view
-        min_zoom=8,     # Increased from 7 to 8
+        zoom_start=11,  # Increased from 10 to 11 for closer initial view
+        min_zoom=9,     # Increased from 8 to 9
         max_zoom=15,
         max_bounds=True,
         bounds=[[37.8, -79.5], [40.2, -74.5]]
@@ -54,7 +54,7 @@ def show_map(filtered_df):
         ne = display_df[['lat', 'lon']].max().values.tolist()
         
         # Adjust padding based on the number of markers
-        padding = 0.02 if len(display_df) > 1 else 0.01  # Reduced padding values
+        padding = 0.01 if len(display_df) > 1 else 0.005  # Reduced padding values further
         
         # Calculate padded bounds
         padding_lat = (ne[0] - sw[0]) * padding
